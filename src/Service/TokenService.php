@@ -53,6 +53,11 @@ class TokenService implements TokenServiceInterface
 
     public function exists(string $token): bool
     {
+        return (bool)$this->tokenRepository->exists($token);
+    }
+
+    public function getTokenByToken(string $token): ?Token
+    {
         return $this->tokenRepository->exists($token);
     }
 

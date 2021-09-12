@@ -13,5 +13,7 @@ interface TokenServiceInterface
 
     public function exists(string $token): bool;
 
+    public function getTokenByToken(string $token): ?Token;
+
     public function saveToken(TokenResponseSchema $tokenResponseSchema): void;
 }

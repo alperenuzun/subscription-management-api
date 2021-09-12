@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Device
 {
+    const OS_ANDROID = 'android';
+    const OS_IOS = 'ios';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

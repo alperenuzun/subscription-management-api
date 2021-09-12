@@ -26,7 +26,7 @@ class TokenRepository extends ServiceEntityRepository implements TokenRepository
         return $this->findOneBy(['uid' => $uid]);
     }
 
-    public function exists(string $token): bool
+    public function exists(string $token): ?Token
     {
         $tokens = $this->createQueryBuilder('t')
             ->where('t.token=:token')
@@ -36,7 +36,7 @@ class TokenRepository extends ServiceEntityRepository implements TokenRepository
             ->getQuery()
             ->getResult();
 
-        return (bool)$tokens;
+        return $tokens ? current($tokens) : null;
     }
 
     public function saveToken(TokenResponseSchema $tokenResponseSchema): void

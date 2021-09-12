@@ -18,7 +18,7 @@ class ProviderResponseSchema implements \JsonSerializable
     /**
      * @return bool
      */
-    public function isStatus(): bool
+    public function getStatus(): bool
     {
         return $this->status;
     }
