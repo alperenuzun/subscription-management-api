@@ -30,7 +30,7 @@ class ProviderSubscriptionController extends AbstractController
     }
 
     /**
-     * @Route("/ios/check-subscription", name="ios_check_subscription", methods={"GET"})
+     * @Route("/ios/check-subscription", name="ios_check_subscription", methods={"POST"})
      */
     public function checkSubscriptionIos(Request $request): JsonResponse
     {
