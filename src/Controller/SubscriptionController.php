@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Helper\RequestBodyResolver;
 use App\Modules\Register\Register;
+use App\Service\Interfaces\TokenServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +25,12 @@ class SubscriptionController extends AbstractController
     /**
      * @Route("/check-subscription", name="check_subscription", methods={"POST"})
      */
-    public function checkSubscription(Request $request): JsonResponse
+    public function checkSubscription(Request $request, TokenServiceInterface $tokenService): JsonResponse
     {
-        return new JsonResponse([$request]);
+        $parameters = RequestBodyResolver::resolve($request);
+
+        $exist = $tokenService->exists($parameters->get('client_token'));
+
+        return new JsonResponse(['status' => $exist]);
     }
 }

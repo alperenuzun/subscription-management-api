@@ -2,10 +2,13 @@
 
 namespace App\Schema;
 
+use App\Traits\JsonSerializableTrait;
 use DateTime;
 
-class TokenResponseSchema
+class TokenResponseSchema implements \JsonSerializable
 {
+    use JsonSerializableTrait;
+
     /** @var null|string */
     private $uid;
 

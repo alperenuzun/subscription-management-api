@@ -9,5 +9,7 @@ interface TokenRepositoryInterface
 {
     public function getToken(string $uid): ?Token;
 
+    public function exists(string $token): bool;
+
     public function saveToken(TokenResponseSchema $tokenResponseSchema): void;
 }

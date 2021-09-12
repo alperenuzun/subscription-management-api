@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\Token;
+use App\Repository\Interfaces\TokenRepositoryInterface;
 use App\Schema\TokenResponseSchema;
 use App\Service\Interfaces\TokenServiceInterface;
 use DateTime;
@@ -9,6 +11,16 @@ use Firebase\JWT\JWT;
 
 class TokenService implements TokenServiceInterface
 {
+    private $tokenRepository;
+
+    /**
+     * @param TokenRepositoryInterface $tokenRepository
+     */
+    public function __construct(TokenRepositoryInterface $tokenRepository)
+    {
+        $this->tokenRepository = $tokenRepository;
+    }
+
     public function generateToken(string $uid): TokenResponseSchema
     {
         $secretKey  = 'bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew=';
@@ -31,6 +43,21 @@ class TokenService implements TokenServiceInterface
         return (new TokenResponseSchema())
             ->setToken(JWT::encode($data, $secretKey, 'HS512'))
             ->setUid($uid)
-            ->setExpireDate($issuedAt);
+            ->setExpireDate((new DateTime())->setTimestamp($expire));
+    }
+
+    public function getToken(string $uid): ?Token
+    {
+        return $this->tokenRepository->getToken($uid);
+    }
+
+    public function exists(string $token): bool
+    {
+        return $this->tokenRepository->exists($token);
+    }
+
+    public function saveToken(TokenResponseSchema $tokenResponseSchema): void
+    {
+        $this->tokenRepository->saveToken($tokenResponseSchema);
     }
 }
