@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Subscription
 {
+    const STARTED_STATUS = 1;
+    const RENEWED_STATUS = 2;
+    const CANCELED_STATUS = 3;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

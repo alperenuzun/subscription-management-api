@@ -40,10 +40,8 @@ class TokenHandler extends AbstractChainHandler
         $chainParameters->setToken($tokenResponse->getToken());
         $chainParameters->setResult($tokenResponse);
 
-        // cache'e uid için token'ı yaz
         $this->tokenService->saveToken($tokenResponse);
 
-        // client tablosuna eklemek için event fırlat (varsa ekleme)
         $this->getEventDispatcher()->dispatch(
             new RegisterEvent($tokenResponse->getUid(), (int)$appId, $language, $operatingSystem)
         );

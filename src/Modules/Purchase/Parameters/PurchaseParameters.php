@@ -14,6 +14,12 @@ class PurchaseParameters extends AbstractChainParameters implements ChainParamet
     /** @var null|string */
     private $receipt = null;
 
+    /** @var int */
+    private $deviceId = 0;
+
+    /** @var int  */
+    private $appId = 0;
+
     /** @var null|ProviderResponseSchema */
     private $result = null;
 
@@ -54,6 +60,44 @@ class PurchaseParameters extends AbstractChainParameters implements ChainParamet
     public function setReceipt(?string $receipt): self
     {
         $this->receipt = $receipt;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeviceId(): int
+    {
+        return $this->deviceId;
+    }
+
+    /**
+     * @param int $deviceId
+     * @return PurchaseParameters
+     */
+    public function setDeviceId(int $deviceId): self
+    {
+        $this->deviceId = $deviceId;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAppId(): int
+    {
+        return $this->appId;
+    }
+
+    /**
+     * @param int $appId
+     * @return PurchaseParameters
+     */
+    public function setAppId(int $appId): self
+    {
+        $this->appId = $appId;
 
         return $this;
     }

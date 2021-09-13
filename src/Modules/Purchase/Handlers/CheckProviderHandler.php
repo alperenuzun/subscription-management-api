@@ -42,8 +42,11 @@ class CheckProviderHandler extends AbstractChainHandler
         $provider = $this->providerRequest->getProvider($device->getOperatingSystem());
         $response = $provider->checkSubscription($receipt);
 
-        $chainParameters->setResult($response);
-        $chainParameters->setStatus($response->getStatus());
+        $chainParameters
+            ->setResult($response)
+            ->setStatus($response->getStatus())
+            ->setDeviceId($device->getId())
+            ->setAppId(0);
 
         return $chainParameters;
     }
