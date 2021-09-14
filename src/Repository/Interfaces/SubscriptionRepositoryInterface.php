@@ -8,7 +8,7 @@ interface SubscriptionRepositoryInterface
 {
     public function getSubscription(int $clientId): ?Subscription;
 
-    public function getExpiredSubscriptions();
+    public function getExpiredSubscriptions(int $limit);
 
     public function save(Subscription $subscription): void;
 

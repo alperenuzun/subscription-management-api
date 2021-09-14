@@ -25,16 +25,22 @@ class SubscriptionRepository extends ServiceEntityRepository implements Subscrip
         return $this->findOneBy(['clientId' => $clientId]);
     }
 
-    public function getExpiredSubscriptions()
+    public function getExpiredSubscriptions(int $limit = 0)
     {
         $now = (new \DateTime())->format('Y-m-d H:i:s');
 
-        return $this->createQueryBuilder('s')
+        $query = $this->createQueryBuilder('s')
             ->where('s.status != :canceled AND s.expireDate < :now')
+            ->orderBy('s.expireDate', 'ASC')
             ->setParameter('canceled', Subscription::CANCELED_STATUS)
             ->setParameter('now', $now)
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
+
+        if ($limit) {
+            $query->setMaxResults($limit);
+        }
+
+        return $query->getResult();
     }
 
     public function save(Subscription $subscription): void

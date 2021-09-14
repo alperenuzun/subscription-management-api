@@ -13,6 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateSubscriptionCommand extends Command
 {
+    private const ROW_COUNT = 10000;
+
     protected static $defaultName = 'subscription:update:command';
 
     /** @var ProviderRequestFactory */
@@ -43,13 +45,13 @@ class UpdateSubscriptionCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $subscriptions = $this->subscriptionRepository->getExpiredSubscriptions();
+        $subscriptions = $this->subscriptionRepository->getExpiredSubscriptions(self::ROW_COUNT);
 
         /** @var Subscription $subscription */
         foreach ($subscriptions as $subscription) {
             $operatingSystem = $subscription->getClient()->getDevice()->getOperatingSystem();
-            $provider = $this->providerRequest->getProvider($operatingSystem);
 
+            $provider = $this->providerRequest->getProvider($operatingSystem);
             $response = $provider->checkSubscription('test1231');
 
             $status = $this->subscriptionStatusService->getStatus(
@@ -61,9 +63,9 @@ class UpdateSubscriptionCommand extends Command
                 ->setStatus($status)
                 ->setExpireDate($expireDate)
                 ->setCreatedAt(new \DateTime());
-
-            $this->subscriptionStatusService->flush();
         }
+
+        $this->subscriptionStatusService->flush();
 
         return 0;
     }
