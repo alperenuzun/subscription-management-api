@@ -11,9 +11,6 @@ This study is developed by using Symfony Framework, MySQL Database by following 
 - Set up the libraries `composer install`
 - Start the server `symfony server:start`
 
-Also, to be able to have tables, create the migration command like:
-* bin/console make:migration
-
 #### Database Schemas 
 
 DB schemas can be found in `migrations` folder.
@@ -27,6 +24,10 @@ but it will be implemented by cache(redis or memcached).
 
 In this project, Chain of Responsibility pattern is used. So, in `Modules` folder, different modules are placed
 for the infrastructure, and they have manager, chain handlers and some other helpers.
+
+#### Mock Services
+
+The providers placed in the `service` folder and they implement ProviderRequestInterface.
 
 #### Event Dispatchers
 
