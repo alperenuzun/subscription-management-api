@@ -17,7 +17,7 @@ DB schemas can be found in `migrations` folder.
 
 Subscription table is designed as unique for every client to obtain better the performance in the worker.
 
-**Note**: Token schema is created in Mysql database for now, 
+**Note**: Token schema is created in Mysql database for now(That's why There is no index assigned to this table for now), 
 but it will be implemented by cache(redis or memcached).
 
 #### Module Structure
@@ -48,7 +48,7 @@ Could be error mapping here by using Symfony translations.
 The command can be run in php container by this command: `bin/console subscription:update:command`.
 In this command, the subscription table is assumed that every client has only a row for their subscription status.
 So, the count of rows to fetch is determined as 10000. This number could be changed according to the execution time of 
-the cron job, the period of the rows updated etc.
+the cron job(this command), the period of the rows updated etc.
 
 **Recommendation**: Can be a reader command fetching determined count of rows in the database and then dispatch 
 the data to the queue, and if we have many workers that update these lines, like a load balancer we could obtain faster
@@ -57,7 +57,8 @@ many lines can be processed.
 
 #### Todo
 
-- Handle tokens by caching.
+- Handle tokens by caching mechanism.
 - Event dispatchers will fix as async events.
 - Worker command should work like a load balancer as mentioned above.
+- Error mapping by Symfony translation
 
